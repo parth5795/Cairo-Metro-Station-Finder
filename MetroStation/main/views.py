@@ -8,6 +8,8 @@ from django.shortcuts import render
 line1 = json.loads(open('main/Line1.json').read())
 line2 = json.loads(open('main/Line2.json').read())
 line3 = json.loads(open('main/Line3.json').read())
+stations = line1+line2+line3
+
 
 # create a graph of the metro stations
 metroStationsNetwork = nx.Graph()
@@ -28,7 +30,6 @@ for edge in zip(line3, line3[1:]):
 # this function will return the shortest path between two stations
 def shortestPath(source, destination):
     return nx.shortest_path_length(metroStationsNetwork, source, destination)
-
 
 # This function will return the path between two stations
 def getPath(source, destination):
@@ -68,12 +69,12 @@ def listToString(list):
 
 def index(request):
     if request.method == 'POST':
-        source = request.POST.get('Source')
-        destination = request.POST.get('Destination')
-        if source == destination:
-            return render(request, 'main/index.html', {'error': 'Source and Destination are the same', 'source': source, 'destination': destination})
-        else:
+        try:
+            source = request.POST.get('Source')
+            destination = request.POST.get('Destination')
             path = listToString(getPath(source, destination))
             numberofStations = shortestPath(source, destination)
-            return render(request, 'main/index.html', {'path': path, 'numberofStations': numberofStations, 'source': source, 'destination': destination})
-    return render(request, 'main/index.html')
+            return render(request, 'main/index.html', {'path': path, 'numberofStations': numberofStations,'stations': stations})
+        except:
+            return render(request, 'main/index.html', {'error': 'Source and Destination are not valid'})    
+    return render(request, 'main/index.html', {'stations':stations})
