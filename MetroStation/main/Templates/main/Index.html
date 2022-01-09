@@ -9,12 +9,19 @@
 </head>
 <body>
  
-<form class = "needs-validation" novalidate action = "{% url 'main:index' %}" method = "POST">
+<form class = "needs-validation" novalidate action = "{% url 'main:index' %}" method = "POST" >
     {% csrf_token %}
     <div class="form-row">
         <div class="col-xs-12 col-md-5">
           <label for="validationCustom03">Source</label>
-          <input type="text" class="form-control" id="Source" name = "Source" required>
+          <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name = "Source" required>
+            <option selected>Choose...</option>
+            {% for i in stations %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+            
+          </select>
+          <!---Handles Invalid and Valid feedbacks-->
           <div class="invalid-feedback">
             Please provide a valid Source.
           </div>
@@ -24,41 +31,45 @@
             </div>
           {% endif %}
         </div>
-    </div><br>
-       
-    <div class=" form-row">
+</div><br>
+
+      <div class=" form-row">
         <div class="col-xs-12 col-md-5">
           <label for="validationCustom03">Destination</label>
-          <input type="text" class="form-control" id="Destination" name = "Destination" required>
-          <div class="invalid-feedback">
-            Please provide a valid Destination.
-          </div>
-          {% if error %}
-            <div class="alert alert-danger" role="alert">
-              {{ error }}
+          <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name = "Destination" required>
+            <option selected>Choose...</option>
+            {% for i in stations %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+            <div class="invalid-feedback">
+              Please provide a valid Destination.
             </div>
-          {% endif %}
-    </div>
-    </div> <br>
-     <button type="submit" class="btn btn-primary">Calculate</button>  
-    <input type = "reset" class ="btn btn-danger" value = "Reset">
-
-    {% if source == destination %} 
-            <h1 style="color: white;">{{error}}</h1>
-            <h1 style="color: white;" > No Ticket Needed </h1>
-        {% else %}
-        <h1 style="color: purple;">Your path will be {{path}}</h1><br>
-        <h1 style="color: white;" >Number of stations :- {{ numberofStations  }}</h1>
-            {% if numberofStations <= 9 %}
-                <h1 style="color: Yellow"> Yellow Ticket </h1><br>
-                {% elif numberofStations <= 16 %}
-                <h1 style = "color: Green "> Green Ticket </h1><br>
-                {% else %}
-                <h1 style="color: red;"> Red Ticket </h1>
+            {% if error %}
+              <div class="alert alert-danger" role="alert">
+                {{ error }}
+              </div>
             {% endif %}
-        {% endif %}
+          </div>
+      </div> <br>
+    <button type="submit" class="btn btn-primary">Calculate</button>  
+    <input type = "reset" class ="btn btn-danger" value = "Reset">
+{% if numberofStations > 0 %}
+  <h1 style="color: purple;">Your path will be: {{path}}</h1><br>
+  <h1 style="color: orangered;" >Number of stations :- {{ numberofStations }}</h1>
+    {% if numberofStations <= 9 %}
+          <h1 style="color: Yellow;"> Yellow Ticket </h1><br>
+          {% elif numberofStations <= 16 %}
+          <h1 style = "color: Green; "> Green Ticket </h1><br>
+          {% else %}
+          <h1 style="color: red;"> Red Ticket </h1>
+    {% endif %}
+{% endif %}
+</form>
 
-</form>   
+{% for i in line1 %}
+<h1>{{i}}</h1>
+{% endfor %}
 <script>
     // make a javascript function to handle invalid form submission
     (function() {
@@ -78,7 +89,7 @@
             });
         }, false);
     })();
-    
+  
 </script>
 </body>
 </html>
