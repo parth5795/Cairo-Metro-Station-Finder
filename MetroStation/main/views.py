@@ -74,7 +74,9 @@ def index(request):
             destination = request.POST.get('Destination')
             path = listToString(getPath(source, destination))
             numberofStations = shortestPath(source, destination)
-            return render(request, 'main/index.html', {'path': path, 'numberofStations': numberofStations,'stations': stations})
+            return render(request, 'main/index.html', {'path': path, 'numberofStations': numberofStations,'stations': stations, 'msg': 'Source and Destination are the same'})
         except:
             return render(request, 'main/index.html', {'error': 'Source and Destination are not valid', 'stations': stations})    
     return render(request, 'main/index.html', {'stations':stations})
+
+
