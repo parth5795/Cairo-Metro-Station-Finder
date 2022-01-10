@@ -9,7 +9,7 @@ line1 = json.loads(open('main/Line1.json').read())
 line2 = json.loads(open('main/Line2.json').read())
 line3 = json.loads(open('main/Line3.json').read())
 stations = line1+line2+line3
-
+#C:\Users\parth\Cairo-Metro-Station-Finder\MetroStation\main\Line3.json
 
 # create a graph of the metro stations
 metroStationsNetwork = nx.Graph()
@@ -76,5 +76,5 @@ def index(request):
             numberofStations = shortestPath(source, destination)
             return render(request, 'main/index.html', {'path': path, 'numberofStations': numberofStations,'stations': stations})
         except:
-            return render(request, 'main/index.html', {'error': 'Source and Destination are not valid'})    
+            return render(request, 'main/index.html', {'error': 'Source and Destination are not valid', 'stations': stations})    
     return render(request, 'main/index.html', {'stations':stations})
