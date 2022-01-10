@@ -56,21 +56,26 @@
       
     <button type="submit" class="btn btn-primary">Calculate</button>  
     <input type = "reset" class ="btn btn-danger" value = "Reset">
-{% if numberofStations > 1 %}
-  <h1 style="color: purple;">Your path will be: {{path}}</h1><br>
-  <h1 style="color: orangered;" >Number of stations :- {{ numberofStations }}</h1>
-    {% if numberofStations <= 9 %}
-          <h1 style="color: Yellow;"> Yellow Ticket </h1><br>
-          {% elif numberofStations <= 16 %}
-          <h1 style = "color: Green; "> Green Ticket </h1><br>
-          {% else %}
-          <h1 style="color: red;"> Red Ticket </h1>
-    {% endif %}
-{% endif %}
 </form>
-{% for i in line1 %}
-<h1>{{i}}</h1>
-{% endfor %}
+<div>
+  {% if numberofStations >= 1 %}
+  
+    <h1 style="color: purple;">Your path will be:<br> {{path}}</h1><br>
+    <h1 style="color: orangered;" >Number of stations :- {{ numberofStations }}</h1>
+      {% if numberofStations <= 9 %}
+            <div style="color: black; background: Yellow; text-align: center;" > Yellow Ticket </div><br>
+            {% elif numberofStations <= 16 %}
+            <div style = "color: white; background: Green; text-align: center; "> Green Ticket </div><br>
+            {% else %}
+            <div style="color: red;"> Red Ticket </div>
+      {% endif %}
+      {% else %}
+      <h1 style="color: red;"> {{msg}} </h1>
+  {% endif %}
+      </div>
+
+
+      
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
@@ -92,7 +97,12 @@
       }, false)
     })
 })()
+
+
+
+
 </script>
 
 </body>
 </html>
+
